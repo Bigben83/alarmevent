@@ -118,12 +118,12 @@ http://www.voip-info.org/wiki/index.php?page=Asterisk+cmd+AlarmReceiver
 Configure Asterisk to handle alarm calls, when received, store them in
 /var/spool/asterisk/alarm and call the alarmreceiver program upon
 completion.
-
+```
 mkdir -p -m 750	        /var/spool/asterisk/alarm 
 chown asterisk:asterisk /var/spool/asterisk/alarm
-
+```
 in /etc/asterisk/alarmreceiver.conf:
-
+```
 ; alarmreceiver.conf
 [general]
 eventcmd = /usr/local/bin/alarmevent
@@ -134,13 +134,13 @@ fdtimeout = 2000
 sdtimeout = 200
 loudness = 8192
 db-family = alarmreceiver
-
+```
 * Configure Asterisk inbound dialplan for alarm calls and a second outbound
   dialplan for handling "callfiles" (a primitive way to make Asterisk generate
   voice calls). You're expected to know about Asterisk SIP setup and extensions.
 
 example: sip.conf (pstn to sip part)
-
+```
 [31]
 type=friend
 context=phones
@@ -150,9 +150,9 @@ callerid="Ademco Alarm" <31>
 dtmfmode=inband
 disallow=all
 allow=ulaw
-
+```
 in /etc/asterisk/extensions.conf:
-
+```
 ;
 ; It's a call to the alarm receiver
 ;
@@ -161,7 +161,6 @@ exten = _X.,1,Ringing;
 same  = n,Wait(2);
 same  = n,AlarmReceiver
 same  = n,Hangup
-
 ;
 ; Outbound alarm report context (executed by a callfile)
 ;
@@ -179,7 +178,7 @@ same  = n,Wait(2)
 same  = n,Playback(/tmp/alarm-outmessage.${UNIQUEID})
 same  = n,Wait(2)
 same  = n,Hangup
-
+```
 
 
 ATA Notes: 
@@ -212,11 +211,11 @@ Twitter (native):
 
 Twitter (via twidge):
     Configure twidge to be able to send out twitter DMs.
-
+```
     sudo su -s /bin/bash asterisk
     cd ~asterick
     twidge setup
-
+```
     This should write a file out in ~asterisk (/var/lib/asterisk/.twidgerc).
 
 Voice Phone calls:
